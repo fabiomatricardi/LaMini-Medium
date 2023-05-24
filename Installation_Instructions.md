@@ -3,14 +3,10 @@ cd LaMiniLocal
 
 My envirnment
 --------------
-```
-Python 3.10.1 (tags/v3.10.1:2cd268a, Dec  6 2021, 19:10:37) [MSC v.1929 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
-```
+Python 3.7.5 (tags/v3.7.5:5c02a39a0b, Oct 15 2019, 00:11:34) [MSC v.1916 64 bit (AMD64)] on win32
 
 # Create virtual environment
 python -m venv venv
-C:\python310\python.exe -m venv venv
 
 #activate the venv
 venv\Scripts\activate
@@ -31,7 +27,7 @@ python -m pip install --upgrade pip   #upgrade pip
 
 pip  install mkl mkl-include   # required for CPU usage on Mac users  224 Mb
 ```Message
-Installing collected packages: tbb, mkl-include, intel-openmp, mkl
+Installing collected packages: intel-openmp, tbb, mkl, mkl-include
 Successfully installed intel-openmp-2023.1.0 mkl-2023.1.0 mkl-include-2023.1.0 tbb-2021.9.0
 ```
 
@@ -49,7 +45,7 @@ Successfully built transformers
 Installing collected packages: tokenizers, safetensors, zipp, regex, pyyaml, packaging, fsspec, filelock, colorama, tqdm, importlib-metadata, huggingface-hub, transformers
 Successfully installed colorama-0.4.6 filelock-3.12.0 fsspec-2023.1.0 huggingface-hub-0.14.1 importlib-metadata-6.6.0 packaging-23.1 pyyaml-6.0 regex-2023.5.5 safetensors-0.3.1 tokenizers-0.13.3 tqdm-4.65.0 transformers-4.30.0.dev0 zipp-3.15.0
 ```
-pip install langchain==0.0.173
+pip install langchain==0.0.27
 ```message
 Installing collected packages: pydantic, greenlet, sqlalchemy, langchain
 Successfully installed greenlet-2.0.2 langchain-0.0.27 pydantic-1.10.8 sqlalchemy-2.0.15
@@ -185,8 +181,6 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 
 # to align files in Github to your local repo use
 git pull origin master
-git pull --allow-unrelated-histories origin master
-
 
 Force git pull to Overwrite Local Files
 If you have made commits locally that you regret, you may want your local branch to match the remote branch without saving any of your work. This can be done using git reset. First, make sure you have the most recent copy of that remote tracking branch by fetching.
