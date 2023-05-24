@@ -1,0 +1,11 @@
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/.gitattributes
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/.gitignore
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/README.md
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/generation_config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/pytorch_model.bin
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/special_tokens_map.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/spiece.model
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/tokenizer.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/tokenizer_config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/training_args.bin

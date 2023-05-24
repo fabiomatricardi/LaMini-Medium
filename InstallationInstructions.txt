@@ -1,0 +1,237 @@
+mkdir LaMiniLocal
+cd LaMiniLocal
+
+My envirnment
+--------------
+Python 3.7.5 (tags/v3.7.5:5c02a39a0b, Oct 15 2019, 00:11:34) [MSC v.1916 64 bit (AMD64)] on win32
+
+# Create virtual environment
+python -m venv venv
+
+#activate the venv
+venv\Scripts\activate
+
+your terminal will have a new indication on the path
+(venv) C:\Users\fmatricard\...\LaMiniLocal>
+
+#deactivate the venv
+venv\Scripts\deactivate.bat
+the path will return normal
+C:\Users\fmatricard\...\LaMiniLocal>
+
+
+# Activate VENV and install the dependencies
+venv\Scripts\activate
+
+python -m pip install --upgrade pip   #upgrade pip
+
+pip  install mkl mkl-include   # required for CPU usage on Mac users  224 Mb
+```Message
+Installing collected packages: intel-openmp, tbb, mkl, mkl-include
+Successfully installed intel-openmp-2023.1.0 mkl-2023.1.0 mkl-include-2023.1.0 tbb-2021.9.0
+```
+
+# The core for reading .bin file models from Hugging Face
+# torch = 158Mb torchvision= 1Mb   torchaudio= 0.5Mb
+pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0  # The core 
+```
+Message
+Successfully installed certifi-2023.5.7 charset-normalizer-3.1.0 idna-3.4 numpy-1.21.6 pillow-9.5.0 requests-2.31.0 torch-1.11.0 torchaudio-0.11.0 torchvision-0.12.0 typing-extensions-4.6.0 urllib3-2.0.2
+```
+
+pip install git+https://github.com/huggingface/transformers  #install Higging face Transformer libraries
+```Message
+Successfully built transformers
+Installing collected packages: tokenizers, safetensors, zipp, regex, pyyaml, packaging, fsspec, filelock, colorama, tqdm, importlib-metadata, huggingface-hub, transformers
+Successfully installed colorama-0.4.6 filelock-3.12.0 fsspec-2023.1.0 huggingface-hub-0.14.1 importlib-metadata-6.6.0 packaging-23.1 pyyaml-6.0 regex-2023.5.5 safetensors-0.3.1 tokenizers-0.13.3 tqdm-4.65.0 transformers-4.30.0.dev0 zipp-3.15.0
+```
+pip install langchain==0.0.27
+```message
+Installing collected packages: pydantic, greenlet, sqlalchemy, langchain
+Successfully installed greenlet-2.0.2 langchain-0.0.27 pydantic-1.10.8 sqlalchemy-2.0.15
+```
+pip install faiss-cpu==1.7.4
+
+pip install unstructured==0.6.8  # for loading almost all the file type
+``message
+Successfully installed XlsxWriter-3.1.1 anyio-3.6.2 argilla-1.7.0 backoff-2.2.1 cffi-1.15.1 click-8.1.3 commonmark-0.9.1 cryptography-40.0.2 deprecated-1.2.13 et-xmlfile-1.1.0 h11-0.14.0 httpcore-0.16.3 httpx-0.23.3 joblib-1.2.0 lxml-4.9.2 markdown-3.4.3 monotonic-1.6 msg-parser-1.2.0 nltk-3.8.1 olefile-0.46 openpyxl-3.1.2 pandas-1.3.5 pdfminer.six-20221105 pycparser-2.21 pygments-2.15.1 pypandoc-1.11 python-dateutil-2.8.2 python-docx-0.8.11 python-magic-0.4.27 python-pptx-0.6.21 pytz-2023.3 rfc3986-1.5.0 rich-13.0.1 six-1.16.0 sniffio-1.3.0 typer-0.9.0 unstructured-0.6.8 wrapt-1.14.1
+```
+pip install pytesseract==0.3.10
+
+pip install pypdf==3.9.0
+
+pip install pdf2image==1.16.3
+
+pip install sentence_transformers==2.2.2
+```message
+Installing collected packages: sentencepiece, threadpoolctl, scipy, scikit-learn, sentence_transformers
+Successfully installed scikit-learn-1.0.2 scipy-1.7.3 sentence_transformers-2.2.2 sentencepiece-0.1.99 threadpoolctl-3.1.0
+```
+pip install accelerate==0.19.0
+```message
+Installing collected packages: psutil, accelerate
+Successfully installed accelerate-0.19.0 psutil-5.9.5
+```
+
+
+######### WGET ###########
+take it from here as standalone .exe
+https://eternallybored.org/misc/wget/  
+tutorial here
+https://www.howtogeek.com/281663/how-to-use-wget-the-ultimate-command-line-downloading-tool/
+
+###PYTUBE#####
+laminilocal\venv\lib\site-packages
+
+pip install pytube==12.1.3
+wget https://github.com/fabiomatricardi/pytubeFix/raw/main/captions.py --no-check-certificate
+wget https://github.com/fabiomatricardi/pytubeFix/raw/main/cipher.py  --no-check-certificate
+
+move /Y captions.py venv\Lib\site-packages\pytube
+move /Y cipher.py venv\Lib\site-packages\pytube
+
+
+
+####DOWNLOAD THE MODEL   ################
+mkdir model
+use bat file or if error do it manually
+copy wget.exe \model
+movedir.bat
+```
+move .gitattributes \model
+move .gitignore \model
+move README.md \model
+move config.json \model
+move generation_config.json \model
+move pytorch_model.bin \model
+move special_tokens_map.json \model
+move spiece.model \model
+move tokenizer.json \model
+move tokenizer_config.json \model 
+move training_args.bin \model
+```
+
+wget -i filelist.txt  --no-check-certificate
+---filelist.txt-------
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/.gitattributes
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/.gitignore
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/README.md
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/generation_config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/pytorch_model.bin
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/special_tokens_map.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/spiece.model
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/tokenizer.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/tokenizer_config.json
+https://huggingface.co/MBZUAI/LaMini-Flan-T5-248M/resolve/main/training_args.bin
+
+mkdir model
+move .gitattributes \model
+move .gitignore \model
+move README.md \model
+move config.json \model
+move generation_config.json \model
+move pytorch_model.bin \model
+move special_tokens_map.json \model
+move spiece.model \model
+move tokenizer.json \model
+move tokenizer_config.json \model 
+move training_args.bin \model
+
+
+pip freeze > requirements.txt
+
+################################
+GitHub USE
+gh.exe in the main folder
+
+.\gh auth login
+git init
+git remote add origin https://github.com/fabiomatricardi/Medium-ScrapeStatsEarns.git
+
+#more about gitignore
+https://linuxize.com/post/gitignore-ignoring-files-in-git/
+
+echo > .gitignore
+
+to remove all staged files at once
+git reset HEAD -- .
+
+git push -u origin main
+
+OR CREATE A NEW BRANCH
+git push -u origin master
+```
+Enumerating objects: 21, done.
+Counting objects: 100% (21/21), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (21/21), done.
+Writing objects: 100% (21/21), 75.14 KiB | 2.09 MiB/s, done.
+Total 21 (delta 9), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (9/9), done.
+remote: 
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/fabiomatricardi/Medium-ScrapeStatsEarns/pull/new/master
+remote:
+To https://github.com/fabiomatricardi/Medium-ScrapeStatsEarns.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+# to align files in Github to your local repo use
+git pull origin master
+
+Force git pull to Overwrite Local Files
+If you have made commits locally that you regret, you may want your local branch to match the remote branch without saving any of your work. This can be done using git reset. First, make sure you have the most recent copy of that remote tracking branch by fetching.
+
+git fetch <remote> <branch>
+ex: git fetch origin main
+
+Then, use git reset --hard to move the HEAD pointer and the current branch pointer to the most recent commit as it exists on that remote tracking branch.
+
+git reset --hard <remote>/<branch>
+ex: git reset --hard origin/main
+
+_Note: You can find the remotes with git remote -v, and see all available remote tracking branches with git branch --all.
+
+
+########################################3
+wget in the main folder
+venv folder
+----al of the above to be included in the .gitignore---
+
+
+
+
+
+
+
+
+
+
+
+###################### HIGHTLIGHTER FUNCITON ##########################
+from functools import reduce
+from itertools import chain
+main_string = "Note that the file will download to your Terminal’s current folder, so you’ll want to cd to a different folder if you want it stored elsewhere. If you’re not sure what that means, check out our guide to managing files from the command line. The article mentions Linux, but the concepts are the same on macOS systems, and Windows systems running Bash."
+query = "Where is the folder for the download?"
+style_tag = 'pippo'
+
+def highlight(main_string,query,style_tag):
+    """
+    Return renderable: string fitting rich.Text() object with sytling tags inline
+                       to highlight matching words from the query
+    main_string:  is a string with the original text
+    query: is a string with the words to be matched
+    style_tag: is a string containing the STYLE name from the Theme defined custom_theme
+    """
+    text = main_string
+    l1 = query.split(' ')
+    renderable = reduce(lambda t, x: t.replace(*x), chain([text.lower()], ((t, f'[{style_tag}] {t} [/{style_tag}]') for t in l1)))
+    return renderable
+
+a_text = "Large language models (LLMs) with instruction finetuning demonstrate superior generative capabilities. However, these models are resource intensive. To alleviate this issue, we explore distilling knowledge from instruction-tuned LLMs to much smaller ones. To this end, we carefully develop a large set of 2.58M instructions based on both existing and newly-generated instructions. In addition to being sizeable, we design our instructions to cover a broad set of topics to ensure. A thorough investigation of our instruction data demonstrate their diversity, and we generate responses for these instructions using gpt-3.5-turbo. We then exploit the instructions to tune a host of models, dubbed LaMini-LM, of varying sizes, both from the encoder-decoder as well as the decoder-only families. We evaluate our models both automatically (on 15 different NLP benchmarks) and manually. Results show that our proposed LaMini-LM are on par with competitive baselines while being nearly 10 times smaller in size."
+a_query = "What is the from we size of LaMini models"
+
+#result = highlight(a_text,a_query,'pippo')
+console.print(highlight(a_text,a_query,'pippo'))

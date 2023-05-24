@@ -1,0 +1,11 @@
+move .gitattributes \model
+move .gitignore \model
+move README.md \model
+move config.json \model
+move generation_config.json \model
+move pytorch_model.bin \model
+move special_tokens_map.json \model
+move spiece.model \model
+move tokenizer.json \model
+move tokenizer_config.json \model 
+move training_args.bin \model
