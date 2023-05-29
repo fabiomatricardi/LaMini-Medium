@@ -1,12 +1,66 @@
-import os
-import requests
-# PUT HERE YOUR HUGGING FACE API TOKEN shuold start with hf_XXXXXXX...
-#os.environ["HUGGINGFACEHUB_API_TOKEN"] = "hf_XXXXXXXX"
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import pipeline
+import torch
+from rich import console
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich.theme import Theme
+from functools import reduce
+from itertools import chain
+from datetime import datetime
 
-#from langchain.document_loaders import TextLoader  #for textfiles
-from langchain.loaders import TextLoader  #for textfiles
-from langchain.text_splitter import CharacterTextSplitter #text splitter
-from langchain.embeddings import HuggingFaceEmbeddings #for using HugginFace models
-from langchain.vectorstores import FAISS  #facebook vectorizationfrom langchain.chains.question_answering import load_qa_chain
-from langchain.chains.question_answering import load_qa_chain
-from langchain import HuggingFaceHub
+#############################################################################
+#               SIMPLE TEXT2TEXT GENERATION INFERENCE
+#           checkpoint = "./models/LaMini-Flan-T5-783M.bin" 
+# ###########################################################################
+checkpoint = "./model/"  #it is actually LaMini-Flan-T5-248M
+
+console = Console(record=True)
+
+from rich.console import Console
+from rich.terminal_theme import MONOKAI
+
+
+console.print("[bold yellow]Preparing the LaMini Model...")
+tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+base_model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint,
+                                             device_map='auto',
+                                             torch_dtype=torch.float32)
+
+pipe = pipeline('text2text-generation', 
+                 model = base_model,
+                 tokenizer = tokenizer,
+                 max_length = 512, 
+                 do_sample=True,
+                 temperature=0.3,
+                 top_p=0.95,
+                 )
+
+
+"""### The prompt & response"""
+
+import textwrap
+response = ''
+instruction = console.input("Ask FabioMini: ")
+start = datetime.now()
+console.print("[red blink]Executing...")
+console.print(f"[grey78]Generating answer to your question:[grey78] [green_yellow]{instruction}")
+#instruction = 'Write a travel blog about a 3-day trip to The Philippines'
+generated_text = pipe(instruction)
+for text in generated_text:
+  response += text['generated_text']
+wrapped_text = textwrap.fill(response, 100)
+console.print(Panel(wrapped_text, title="FabioMini Reply", title_align="center"))
+stop = datetime.now()
+elapsed = stop - start
+console.rule(f"Report Generated in {elapsed}")
+console.print(f"LaMini @ {datetime.now().ctime()}")
+
+def fix_filename(text):
+  text = text.replace(' ','_')
+  text = text.replace(':','-')
+  return f"{text}.svg"
+
+#console.save_svg("example.svg", theme=MONOKAI)
+console.save_svg(fix_filename(datetime.now().ctime()), theme=MONOKAI)
