@@ -1,7 +1,14 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from transformers import pipeline
 import torch
-
+from rich import console
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich.theme import Theme
+from functools import reduce
+from itertools import chain
+from datetime import datetime
 
 #############################################################################
 #               SIMPLE TEXT2TEXT GENERATION INFERENCE
@@ -9,15 +16,11 @@ import torch
 # ###########################################################################
 checkpoint = "./model/"  #it is actually LaMini-Flan-T5-248M
 
-from rich import console
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
-from functools import reduce
-from itertools import chain
-from datetime import datetime
+console = Console(record=True)
 
-console = Console()
+from rich.console import Console
+from rich.terminal_theme import MONOKAI
+
 
 console.print("[bold yellow]Preparing the LaMini Model...")
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
@@ -39,7 +42,7 @@ pipe = pipeline('text2text-generation',
 
 import textwrap
 response = ''
-instruction = console.input("Ask LaMini: ")
+instruction = console.input("Ask FabioMini: ")
 start = datetime.now()
 console.print("[red blink]Executing...")
 console.print(f"[grey78]Generating answer to your question:[grey78] [green_yellow]{instruction}")
@@ -48,8 +51,16 @@ generated_text = pipe(instruction)
 for text in generated_text:
   response += text['generated_text']
 wrapped_text = textwrap.fill(response, 100)
-console.print(Panel(wrapped_text, title="LaMini Reply", title_align="center"))
+console.print(Panel(wrapped_text, title="FabioMini Reply", title_align="center"))
 stop = datetime.now()
 elapsed = stop - start
 console.rule(f"Report Generated in {elapsed}")
 console.print(f"LaMini @ {datetime.now().ctime()}")
+
+def fix_filename(text):
+  text = text.replace(' ','_')
+  text = text.replace(':','-')
+  return f"{text}.svg"
+
+#console.save_svg("example.svg", theme=MONOKAI)
+console.save_svg(fix_filename(datetime.now().ctime()), theme=MONOKAI)
