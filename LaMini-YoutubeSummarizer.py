@@ -145,7 +145,7 @@ def start_sum(text):
         #sub = myvideo.captions[code]  #original 
         sub = myvideo.captions['a.en']
         caption = sub.generate_srt_captions()
-        #print(caption)
+        #print(caption)#print(caption)
 
         # Club Video Title, details and Description, only for printed version
         # not for the Sumarization one
