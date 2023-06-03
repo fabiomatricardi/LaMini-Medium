@@ -40,3 +40,5 @@ Thumbs.db
 #########################
 /venv/
 /model/
+/model_kr/
+/opus-en-ko/
