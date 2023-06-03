@@ -29,6 +29,7 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 #tokenizer = AutoTokenizer.from_pretrained("hcho22/opus-mt-ko-en-finetuned-en-to-kr")
 #model = AutoModelForSeq2SeqLM.from_pretrained("hcho22/opus-mt-ko-en-finetuned-en-to-kr")
 #  THIS MODEL is H5 requires TENSORFLOW installed
+#model_ttKR = AutoModelForSeq2SeqLM.from_pretrained(Model_KR, from_tf=True)  #for tensorflow
 ###########################################################################################
 LaMini = "./model/"  #it is actually LaMini-Flan-T5-248M
 #Model_KR = './model_kr/'  #tensorflow

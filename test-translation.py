@@ -21,8 +21,8 @@ from langchain import HuggingFaceHub
 # PUT HERE YOUR HUGGING FACE API TOKEN shuold start with hf_XXXXXXX...
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 #############################################################################
-#               SIMPLE TEXT2TEXT GENERATION INFERENCE
-#           checkpoint = "./models/LaMini-Flan-T5-783M.bin" 
+#               SIMPLE TRANSLATION GENERATION INFERENCE
+#           checkpoint = "./model_it/  Helsinki-NLP/opus-mt-en-it
 # ###########################################################################
 
 from rich import console
@@ -35,6 +35,11 @@ from datetime import datetime
 
 console = Console()
 
+#LOCAL MODEL EN-IT
+#---------------------------------
+#  Helsinki-NLP/opus-mt-en-it
+Model_IT = './model_it/'   #torch
+#---------------------------------
 
 pippo = """
 Introduction
@@ -81,19 +86,22 @@ with console.status("Preparing model and pipeline...", spinner="monkey"):
     from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
     # INITIALIZE TRANSLATION FROM ENGLISH TO ITALIAN
 
-    tokenizer_tt0it = AutoTokenizer.from_pretrained("Helsinki-NLP/opus-mt-en-it")  #google/byt5-small   #facebook/m2m100_418M
+    tokenizer_tt0it = AutoTokenizer.from_pretrained(Model_IT)  #google/byt5-small   #facebook/m2m100_418M
     console.print('[bold green] Inizialize AI model...')
-    model_tt0it = AutoModelForSeq2SeqLM.from_pretrained("Helsinki-NLP/opus-mt-en-it")  #Helsinki-NLP/opus-mt-en-it  or #Helsinki-NLP/opus-mt-it-en
+    model_tt0it = AutoModelForSeq2SeqLM.from_pretrained(Model_IT)  #Helsinki-NLP/opus-mt-en-it  or #Helsinki-NLP/opus-mt-it-en
     TToIT = pipeline("translation", model=model_tt0it, tokenizer=tokenizer_tt0it)
 # Example    TToIT("How old are you?")[0]['translation_text']
 
 # ITERATE OVER CHUNKS AND JOIN THE TRANSLATIONS
 finaltext = ''
+start = datetime.datetime.now() #not used now but useful
 console.print('[bold yellow] Translation in progress...')
 for item in texts:
   line = TToIT(item.page_content)[0]['translation_text']
   finaltext = finaltext+line+'\n'
-
+stop = datetime.datetime.now() #not used now but useful
+elapsed = stop - start
+console.print(f'[bold underline green1] Translation generated in [reverse dodger_blue2]{elapsed}[/reverse dodger_blue2]...')
 console.print(Panel(finaltext, title="AI Translatio", title_align="center"))
 
 
