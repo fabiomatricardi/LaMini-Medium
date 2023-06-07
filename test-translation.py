@@ -31,7 +31,7 @@ from rich.panel import Panel
 from rich.text import Text
 from functools import reduce
 from itertools import chain
-from datetime import datetime
+import datetime
 
 console = Console()
 
