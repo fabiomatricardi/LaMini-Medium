@@ -40,7 +40,8 @@ import datetime
 #               SIMPLE TEXT2TEXT GENERATION INFERENCE
 #           checkpoint = "./models/LaMini-Flan-T5-783M.bin" 
 # ###########################################################################
-LaMini = './model/' # checkpoint for the Model  #it is actually LaMini-Flan-T5-248M
+checkpoint = "./model/"  #it is actually LaMini-Flan-T5-248M
+LaMini = './model/'
 
 
 ######################################################################
@@ -101,6 +102,14 @@ def AI_SummaryPL(checkpoint, text, chunks, overlap):
 
 global video_summary
 
+#with st.columns(3)[1]:
+#     st.header("hello world")
+#     st.image("http://placekitten.com/200/200")
+#st.title('🏞️ Image display methods')
+#
+#st.write("a logo and text next to eachother")
+#
+
 ### HEADER section
 st.image('Headline.jpg', width=750)
 #title('AI Summarizer')
@@ -112,35 +121,21 @@ st.image('Headline.jpg', width=750)
 
 
 title = st.text_input('1. Input your Youtube Video url', 'Something like https://youtu.be/SCYMLHB7cfY....')   #https://youtu.be/SCYMLHB7cfY
-# VEIDEO DETAILS SECTION
-col1, col2 = st.columns(2)
-videotitle = col1.empty()
-dur = col1.empty()
-vid_url = col1.empty()
-thumb = col2.empty()
-st.divider()
-c1, c2, c3 = st.columns([1,5,1])
-btt = c2.button('2. Start Summarization', use_container_width=True, type="primary", key='start')
+videotitle = st.empty()
+
+btt = st.empty()
 txt = st.empty()
 video_dur = st.empty()
 video_redux = st.empty()
 st.divider()
 
 video_summary = ''
-def start_sum(title):
-    if '...' in title:
+def start_sum(text):
+    if '...' in text:
         st.warning('Wrong youtube video link! Type a valid url like https://youtu.be/SCYMLHB7cfY', icon="⚠️")
     else:
         myvideo = YT(title, use_oauth=True, allow_oauth_cache=True)
-        prefix = title[-11:]
-        import datetime
-        dur_time = str(datetime.timedelta(seconds=myvideo.length)) 
-        urlthumbail = myvideo.thumbnail_url 
         # required only for the first time to know what languages are aavailable
-        videotitle.markdown(f"Video title: \n**{myvideo.title}**")
-        dur.markdown(f"Video duration: **{dur_time}**")
-        vid_url.markdown(f"Video url: **{title}**")
-        thumb.image(urlthumbail,width=250)
         print(myvideo.title)
         print(myvideo.captions) #print the options of languages available
         #Commented for automatically choice to auto-generated
@@ -155,9 +150,10 @@ def start_sum(title):
         # Club Video Title, details and Description, only for printed version
         # not for the Sumarization one
         # possible in future to prepare for Markdown to PDF export
+        import datetime
         m1 = f"TITLE: {myvideo.title}"+'\n'
         m2 = f"thumbnail url: {myvideo.thumbnail_url}"+'\n'
-        m4 = f"video Duration: {dur_time}"+'\n'
+        m4 = f"video Duration: {str(datetime.timedelta(seconds=myvideo.length))}"+'\n'
         m5 = "----------------------------------------"+'\n'
         #m6 = textwrap.fill(myvideo.description, 80)+'\n'  #solution not good
         m6 = myvideo.description+'\n'
@@ -181,36 +177,36 @@ def start_sum(title):
 
         to_sum_text = m1+m4+m5+final_text
         wrapped_text = textwrap.fill(to_sum_text, 100)
-        transcr_fname = f"{prefix}-video_transcript.txt"
-        with open(transcr_fname, 'w') as f:
+        with open('video_transcript.txt', 'w') as f:
             f.write(to_sum_text)
         f.close()
-        print(f'File {transcr_fname} saved')
+        print('File video_transcript.txt saved')
 
-        
+        videotitle.markdown(f"Video title: **{myvideo.title}**")
         print("Starting AI pipelines")
         video_summary, duration, reduction = AI_SummaryPL(LaMini,to_sum_text,3700,500)
         txt.text_area('Summarized text', video_summary, height = 350, key = 'result')
         video_dur.markdown(f'Processing time :clock3: :, {duration}')
         video_redux.markdown(f"Percentage of reduction: {reduction}   **{len(video_summary.split(' '))}**/{len(to_sum_text.split(' '))} words")
-        st.markdown(f"## Download your YouTube Video Summarization")
-        def savefile(generated_summary, filename):
-            st.write("Download in progress...")
-            with open(filename, 'w') as t:
-                t.write(generated_summary)
-            t.close()
-            print(f'AI Summarization saved in {filename}')
-            st.success(f'AI Summarization saved in {filename}', icon="✅")
-        sum_fname = f"{prefix}-video_summarization.txt"
-        savefile(st.session_state.result, sum_fname)        
 
-if btt:
+
+if btt.button('2. Start Summarization', key='start'):
     with st.spinner('Initializing pipelines...'):
         st.success(' AI process started', icon="🤖")
         start_sum(title)
 else:
     st.write('Insert the video url in the input box above...')
 
+if st.button('3. Download Summarization'):
+    st.markdown(f"## Download your YouTube Video Summarization")
+    def savefile(generated_summary, filename):
+        st.write("Download in progress...")
+        with open(filename, 'w') as t:
+            t.write(generated_summary)
+        t.close()
+        st.success(f'AI Summarization saved in {filename}', icon="✅")
+    savefile(st.session_state.result, 'video_summarization.txt')
+    txt.text_area('Summarized text', st.session_state.result, height = 350)
 
 
 
